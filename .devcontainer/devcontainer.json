@@ -1,0 +1,55 @@
+{
+  "name": "SoundLens API Dev Container",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "api",
+  "workspaceFolder": "/usr/src/app",
+
+  // コンテナ起動後は手動で npm run dev を実行
+  "postCreateCommand": "npm install",
+
+  // Dev Container起動時は自動でサーバーを起動しない
+  "overrideCommand": true,
+
+  // VSCode設定
+  "customizations": {
+    "vscode": {
+      // コンテナ内にインストールする拡張機能
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      // エディタ設定
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "sh",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        }
+      }
+    }
+  },
+
+  // コンテナ起動時のポートフォワーディング
+  "forwardPorts": [3000, 9229],
+  "portsAttributes": {
+    "3000": {
+      "label": "API Server",
+      "onAutoForward": "notify"
+    },
+    "9229": {
+      "label": "Debug Port",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // コンテナ内で実行するユーザー（rootのまま、権限問題を避ける）
+  "remoteUser": "root",
+
+  // マウント設定
+  "mounts": [
+    "source=${localWorkspaceFolder}/.env,target=/usr/src/app/.env,type=bind"
+  ]
+}

@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: soundlens-api
+    ports:
+      - "3000:3000"
+      - "9229:9229"  # デバッグポート
+    volumes:
+      # ソースコードをマウント（リアルタイム反映）
+      - ./:/usr/src/app
+      # node_modulesは除外（コンテナ内のものを使用）
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - .env
+    # ログを見やすく
+    stdin_open: true
+    tty: true
+    # 開発サーバー起動（Dev Containerモードではoverride）
+    command: npm run dev

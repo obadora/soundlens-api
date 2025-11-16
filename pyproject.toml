@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "soundlens-api"
+version = "1.0.0"
+description = "音楽分析・比較アプリケーション"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "0.109.0"
+uvicorn = {extras = ["standard"], version = "0.27.0"}
+httpx = "0.26.0"
+pydantic = "2.5.3"
+pydantic-settings = "2.1.0"
+python-multipart = "0.0.6"
+python-dotenv = "1.0.0"
+numpy = "1.26.3"
+pandas = "2.1.4"
+janome = "0.5.0"
+textblob = "0.17.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "7.4.4"
+pytest-asyncio = "0.23.3"
+black = "23.12.1"
+flake8 = "7.0.0"
+mypy = "1.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

@@ -1,0 +1,62 @@
+{
+  "name": "SoundLens API Development",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "api",
+  "workspaceFolder": "/src",
+
+  // コンテナ起動後に実行するコマンド
+  "postCreateCommand": "poetry install --with dev",
+
+  // VSCodeの設定
+  "customizations": {
+    "vscode": {
+      // 推奨拡張機能
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "tamasfe.even-better-toml"
+      ],
+      // エディタ設定
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.flake8Enabled": false,
+        "python.formatting.provider": "none",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          }
+        },
+        "python.testing.pytestEnabled": true,
+        "python.testing.pytestArgs": [
+          "tests"
+        ],
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/*.pyc": true
+        }
+      }
+    }
+  },
+
+  // ポートフォワーディング
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "FastAPI Application",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // コンテナ内で実行するユーザー
+  "remoteUser": "root",
+
+  // コンテナの機能
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  }
+}

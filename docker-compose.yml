@@ -3,15 +3,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: soundlens-api
     container_name: soundlens-api
     ports:
       - "8000:8000"
     volumes:
       # プロジェクト全体をマウント
-      - ./:/usr/src/app
+      - ./:/src
       # __pycache__ と .pytest_cache はコンテナ内で管理
-      - /usr/src/app/__pycache__
-      - /usr/src/app/.pytest_cache
+      - /src/__pycache__
+      - /src/.pytest_cache
     environment:
       - PYTHONUNBUFFERED=1
       - ENVIRONMENT=development

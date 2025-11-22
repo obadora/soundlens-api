@@ -5,7 +5,7 @@
   "workspaceFolder": "/src",
 
   // コンテナ起動後に実行するコマンド
-  "postCreateCommand": "poetry install --with dev",
+  "postCreateCommand": "poetry install --with dev && npm install -g @anthropic-ai/claude-code",
 
   // VSCodeの設定
   "customizations": {
@@ -57,6 +57,9 @@
 
   // コンテナの機能
   "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
   }
 }

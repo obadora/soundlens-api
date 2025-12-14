@@ -4,8 +4,8 @@
   "service": "api",
   "workspaceFolder": "/src",
 
-  // コンテナ起動前に既存のコンテナを削除
-  "initializeCommand": "docker-compose -f ${localWorkspaceFolder}/docker-compose.yml down --remove-orphans",
+  // コンテナ起動前に既存のコンテナを削除し、.envをメインworktreeからコピー
+  "initializeCommand": "${localWorkspaceFolder}/.devcontainer/init.sh ${localWorkspaceFolder}",
 
   // コンテナ起動後に実行するコマンド
   "postCreateCommand": "poetry install --with dev && npm install -g @anthropic-ai/claude-code",

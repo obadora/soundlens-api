@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 
 
 class Settings(BaseSettings):
@@ -21,9 +22,11 @@ class Settings(BaseSettings):
     SPOTIFY_TOKEN_URL: str = "https://accounts.spotify.com/api/token"
     SPOTIFY_API_BASE_URL: str = "https://api.spotify.com/v1"
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = ConfigDict(
+        env_file=".env",
+        case_sensitive=True,
+        extra="ignore"  # 余分な環境変数を無視
+    )
 
 
 settings = Settings()

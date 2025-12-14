@@ -20,8 +20,7 @@ class TestGetTrack:
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
             response = client.get(
-                "/api/tracks/test_track_id",
-                headers={"Authorization": "Bearer test_access_token"}
+                "/api/tracks/test_track_id", headers={"Authorization": "Bearer test_access_token"}
             )
 
             assert response.status_code == 200
@@ -48,9 +47,7 @@ class TestGetTrack:
         mock_response = MagicMock()
         mock_response.status_code = 401
         mock_response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "Unauthorized",
-            request=MagicMock(),
-            response=MagicMock(status_code=401)
+            "Unauthorized", request=MagicMock(), response=MagicMock(status_code=401)
         )
 
         with patch("httpx.AsyncClient") as mock_async_client:
@@ -59,8 +56,7 @@ class TestGetTrack:
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
             response = client.get(
-                "/api/tracks/test_track_id",
-                headers={"Authorization": "Bearer invalid_token"}
+                "/api/tracks/test_track_id", headers={"Authorization": "Bearer invalid_token"}
             )
 
             assert response.status_code == 401
@@ -73,9 +69,7 @@ class TestGetTrack:
         mock_response = MagicMock()
         mock_response.status_code = 404
         mock_response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "Not Found",
-            request=MagicMock(),
-            response=MagicMock(status_code=404)
+            "Not Found", request=MagicMock(), response=MagicMock(status_code=404)
         )
 
         with patch("httpx.AsyncClient") as mock_async_client:
@@ -85,7 +79,7 @@ class TestGetTrack:
 
             response = client.get(
                 "/api/tracks/non_existent_track",
-                headers={"Authorization": "Bearer test_access_token"}
+                headers={"Authorization": "Bearer test_access_token"},
             )
 
             assert response.status_code == 404
@@ -95,14 +89,11 @@ class TestGetTrack:
         """ネットワークエラーが発生した場合の処理を確認"""
         with patch("httpx.AsyncClient") as mock_async_client:
             mock_client_instance = AsyncMock()
-            mock_client_instance.get.side_effect = httpx.ConnectError(
-                "Connection failed"
-            )
+            mock_client_instance.get.side_effect = httpx.ConnectError("Connection failed")
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
             response = client.get(
-                "/api/tracks/test_track_id",
-                headers={"Authorization": "Bearer test_access_token"}
+                "/api/tracks/test_track_id", headers={"Authorization": "Bearer test_access_token"}
             )
 
             assert response.status_code == 500
@@ -123,8 +114,7 @@ class TestGetTrack:
 
             test_token = "Bearer test_access_token_123"
             response = client.get(
-                "/api/tracks/test_track_id",
-                headers={"Authorization": test_token}
+                "/api/tracks/test_track_id", headers={"Authorization": test_token}
             )
 
             assert response.status_code == 200
@@ -152,7 +142,7 @@ class TestGetAudioFeatures:
 
             response = client.get(
                 "/api/tracks/test_track_id/features",
-                headers={"Authorization": "Bearer test_access_token"}
+                headers={"Authorization": "Bearer test_access_token"},
             )
 
             assert response.status_code == 200
@@ -180,9 +170,7 @@ class TestGetAudioFeatures:
         mock_response = MagicMock()
         mock_response.status_code = 401
         mock_response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "Unauthorized",
-            request=MagicMock(),
-            response=MagicMock(status_code=401)
+            "Unauthorized", request=MagicMock(), response=MagicMock(status_code=401)
         )
 
         with patch("httpx.AsyncClient") as mock_async_client:
@@ -192,7 +180,7 @@ class TestGetAudioFeatures:
 
             response = client.get(
                 "/api/tracks/test_track_id/features",
-                headers={"Authorization": "Bearer invalid_token"}
+                headers={"Authorization": "Bearer invalid_token"},
             )
 
             assert response.status_code == 401
@@ -203,9 +191,7 @@ class TestGetAudioFeatures:
         mock_response = MagicMock()
         mock_response.status_code = 404
         mock_response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "Not Found",
-            request=MagicMock(),
-            response=MagicMock(status_code=404)
+            "Not Found", request=MagicMock(), response=MagicMock(status_code=404)
         )
 
         with patch("httpx.AsyncClient") as mock_async_client:
@@ -215,7 +201,7 @@ class TestGetAudioFeatures:
 
             response = client.get(
                 "/api/tracks/non_existent_track/features",
-                headers={"Authorization": "Bearer test_access_token"}
+                headers={"Authorization": "Bearer test_access_token"},
             )
 
             assert response.status_code == 404
@@ -225,14 +211,12 @@ class TestGetAudioFeatures:
         """ネットワークエラーが発生した場合の処理を確認"""
         with patch("httpx.AsyncClient") as mock_async_client:
             mock_client_instance = AsyncMock()
-            mock_client_instance.get.side_effect = httpx.ConnectError(
-                "Connection failed"
-            )
+            mock_client_instance.get.side_effect = httpx.ConnectError("Connection failed")
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
             response = client.get(
                 "/api/tracks/test_track_id/features",
-                headers={"Authorization": "Bearer test_access_token"}
+                headers={"Authorization": "Bearer test_access_token"},
             )
 
             assert response.status_code == 500
@@ -240,7 +224,9 @@ class TestGetAudioFeatures:
             assert "Failed to fetch audio features" in data["detail"]
 
     @pytest.mark.asyncio
-    async def test_get_audio_features_authorization_header_forwarded(self, client, sample_audio_features):
+    async def test_get_audio_features_authorization_header_forwarded(
+        self, client, sample_audio_features
+    ):
         """認証ヘッダーがSpotify APIに正しく転送されることを確認"""
         mock_response = MagicMock()
         mock_response.json.return_value = sample_audio_features
@@ -253,8 +239,7 @@ class TestGetAudioFeatures:
 
             test_token = "Bearer test_access_token_456"
             response = client.get(
-                "/api/tracks/test_track_id/features",
-                headers={"Authorization": test_token}
+                "/api/tracks/test_track_id/features", headers={"Authorization": test_token}
             )
 
             assert response.status_code == 200

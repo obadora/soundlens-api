@@ -15,6 +15,13 @@ jobs:
     name: Test and Lint
     runs-on: ubuntu-latest
 
+    env:
+      SPOTIFY_CLIENT_ID: test_client_id
+      SPOTIFY_CLIENT_SECRET: test_client_secret
+      REDIRECT_URI: http://localhost:3000/callback
+      ALLOWED_ORIGINS: http://localhost:3000
+      ENVIRONMENT: test
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

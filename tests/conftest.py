@@ -33,7 +33,7 @@ def sample_token_response():
         "refresh_token": "test_refresh_token",
         "expires_in": 3600,
         "token_type": "Bearer",
-        "scope": "user-read-private user-read-email"
+        "scope": "user-read-private user-read-email",
     }
 
 
@@ -43,19 +43,10 @@ def sample_track_data():
     return {
         "id": "test_track_id",
         "name": "Test Track",
-        "artists": [
-            {
-                "id": "test_artist_id",
-                "name": "Test Artist"
-            }
-        ],
-        "album": {
-            "id": "test_album_id",
-            "name": "Test Album",
-            "release_date": "2024-01-01"
-        },
+        "artists": [{"id": "test_artist_id", "name": "Test Artist"}],
+        "album": {"id": "test_album_id", "name": "Test Album", "release_date": "2024-01-01"},
         "duration_ms": 180000,
-        "popularity": 75
+        "popularity": 75,
     }
 
 
@@ -76,5 +67,5 @@ def sample_audio_features():
         "valence": 0.6,
         "tempo": 120.0,
         "duration_ms": 180000,
-        "time_signature": 4
+        "time_signature": 4,
     }

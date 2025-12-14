@@ -19,14 +19,10 @@ async def get_track(track_id: str, authorization: str = Header(...)):
             return response.json()
         except httpx.HTTPStatusError as e:
             raise HTTPException(
-                status_code=e.response.status_code,
-                detail=f"Failed to fetch track: {str(e)}"
+                status_code=e.response.status_code, detail=f"Failed to fetch track: {str(e)}"
             )
         except httpx.HTTPError as e:
-            raise HTTPException(
-                status_code=500,
-                detail=f"Failed to fetch track: {str(e)}"
-            )
+            raise HTTPException(status_code=500, detail=f"Failed to fetch track: {str(e)}")
 
 
 @router.get("/{track_id}/features")
@@ -44,10 +40,7 @@ async def get_audio_features(track_id: str, authorization: str = Header(...)):
         except httpx.HTTPStatusError as e:
             raise HTTPException(
                 status_code=e.response.status_code,
-                detail=f"Failed to fetch audio features: {str(e)}"
+                detail=f"Failed to fetch audio features: {str(e)}",
             )
         except httpx.HTTPError as e:
-            raise HTTPException(
-                status_code=500,
-                detail=f"Failed to fetch audio features: {str(e)}"
-            )
+            raise HTTPException(status_code=500, detail=f"Failed to fetch audio features: {str(e)}")

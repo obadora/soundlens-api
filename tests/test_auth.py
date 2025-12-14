@@ -46,10 +46,7 @@ class TestAuthCallback:
             mock_client_instance.post.return_value = mock_response
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
-            response = client.post(
-                "/auth/callback",
-                json={"code": "test_auth_code"}
-            )
+            response = client.post("/auth/callback", json={"code": "test_auth_code"})
 
             assert response.status_code == 200
             data = response.json()
@@ -68,9 +65,7 @@ class TestAuthCallback:
         # HTTPエラーをシミュレート
         mock_response = MagicMock()
         mock_response.raise_for_status.side_effect = httpx.HTTPStatusError(
-            "Invalid authorization code",
-            request=MagicMock(),
-            response=MagicMock(status_code=400)
+            "Invalid authorization code", request=MagicMock(), response=MagicMock(status_code=400)
         )
 
         with patch("httpx.AsyncClient") as mock_async_client:
@@ -78,10 +73,7 @@ class TestAuthCallback:
             mock_client_instance.post.return_value = mock_response
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
-            response = client.post(
-                "/auth/callback",
-                json={"code": "invalid_code"}
-            )
+            response = client.post("/auth/callback", json={"code": "invalid_code"})
 
             assert response.status_code == 500
             data = response.json()
@@ -90,10 +82,7 @@ class TestAuthCallback:
 
     def test_exchange_token_missing_code(self, client):
         """認証コードが欠けている場合にエラーになることを確認"""
-        response = client.post(
-            "/auth/callback",
-            json={}
-        )
+        response = client.post("/auth/callback", json={})
 
         # Pydanticのバリデーションエラー
         assert response.status_code == 422
@@ -103,15 +92,10 @@ class TestAuthCallback:
         """ネットワークエラーが発生した場合の処理を確認"""
         with patch("httpx.AsyncClient") as mock_async_client:
             mock_client_instance = AsyncMock()
-            mock_client_instance.post.side_effect = httpx.ConnectError(
-                "Connection failed"
-            )
+            mock_client_instance.post.side_effect = httpx.ConnectError("Connection failed")
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
-            response = client.post(
-                "/auth/callback",
-                json={"code": "test_code"}
-            )
+            response = client.post("/auth/callback", json={"code": "test_code"})
 
             assert response.status_code == 500
             data = response.json()
@@ -131,10 +115,7 @@ class TestAuthCallback:
             mock_client_instance.post.return_value = mock_response
             mock_async_client.return_value.__aenter__.return_value = mock_client_instance
 
-            response = client.post(
-                "/auth/callback",
-                json={"code": "test_auth_code"}
-            )
+            response = client.post("/auth/callback", json={"code": "test_auth_code"})
 
             assert response.status_code == 200
 

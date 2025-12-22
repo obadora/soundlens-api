@@ -1,0 +1,35 @@
+services:
+  # FastAPI Web Service
+  - type: web
+    name: soundlens-api
+    runtime: docker
+    region: singapore  # 日本に近いリージョン
+    plan: free
+    branch: main  # デプロイするブランチ（必要に応じて変更）
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      # Spotify API認証情報（Renderのダッシュボードで設定）
+      - key: SPOTIFY_CLIENT_ID
+        sync: false
+      - key: SPOTIFY_CLIENT_SECRET
+        sync: false
+      - key: REDIRECT_URI
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+
+      # アプリケーション設定
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+
+      # Database URL（Supabaseで設定）
+      - key: DATABASE_URL
+        sync: false
+
+    healthCheckPath: /health
+
+    # 本番環境用にDockerfileのCMDをオーバーライド
+    dockerCommand: uvicorn app.main:app --host 0.0.0.0 --port 8000

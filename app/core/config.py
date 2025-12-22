@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     # CORS
     ALLOWED_ORIGINS: str = "http://127.0.0.1:3000"
 
+    # Database (Supabase PostgreSQL)
+    DATABASE_URL: str | None = None  # Supabaseの接続文字列（オプション）
+
     # Spotify API エンドポイント
     SPOTIFY_AUTH_URL: str = "https://accounts.spotify.com/authorize"
     SPOTIFY_TOKEN_URL: str = "https://accounts.spotify.com/api/token"

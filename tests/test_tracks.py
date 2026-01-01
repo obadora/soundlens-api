@@ -98,7 +98,7 @@ class TestGetTrack:
 
             assert response.status_code == 500
             data = response.json()
-            assert "Failed to fetch track" in data["detail"]
+            assert "トラック情報の取得に失敗しました" in data["detail"]
 
     @pytest.mark.asyncio
     async def test_get_track_authorization_header_forwarded(self, client, sample_track_data):
@@ -221,7 +221,7 @@ class TestGetAudioFeatures:
 
             assert response.status_code == 500
             data = response.json()
-            assert "Failed to fetch audio features" in data["detail"]
+            assert "オーディオ特徴の取得に失敗しました" in data["detail"]
 
     @pytest.mark.asyncio
     async def test_get_audio_features_authorization_header_forwarded(
